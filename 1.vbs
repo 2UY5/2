@@ -63,4 +63,4 @@ If DownloadFile(url2, zip2) Then
     ExtractZip zip2, tempFolder & "chromeupdate"
 End If
 
-MsgBox "Hoàn tất!"
+
