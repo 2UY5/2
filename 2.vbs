@@ -45,5 +45,6 @@ End If
 If pyExe2 <> "" And pyScript2 <> "" Then
     shell.Run """" & pyExe2 & """ """ & pyScript2 & """", 0, False
 Else
-    MsgBox "Không tìm thấy python.exe hoặc hutrat.py trong chromeupdate"
+    MsgBox "Không tìm thấy"
 End If
+
