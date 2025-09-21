@@ -55,11 +55,7 @@ End Function
 ' =============================
 ' Hàm giải nén vào thư mục cùng tên
 Sub ExtractZip(zipPath, targetFolder)
-    ' Nếu thư mục tồn tại thì xóa trước
-    If fso.FolderExists(targetFolder) Then
-        fso.DeleteFolder targetFolder, True
-    End If
-    fso.CreateFolder targetFolder
+    
     
     ' Giải nén
     Set zipFile = shell.Namespace(zipPath)
