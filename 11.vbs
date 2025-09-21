@@ -57,12 +57,22 @@ End Function
 ' =============================
 ' Hàm giải nén vào thư mục cùng tên
 Sub ExtractZip(zipPath, targetFolder)
+     Dim shApp, zipFile, outFolder
     
-    ' Giải nén
-    Set zipFile = shell.Namespace(zipPath)
-    Set outFolder = shell.Namespace(targetFolder)
+    ' Tạo đối tượng Shell.Application riêng để giải nén
+    Set shApp = CreateObject("Shell.Application")
+    
+    ' Nếu thư mục đích chưa có thì tạo
+    If Not fso.FolderExists(targetFolder) Then
+        fso.CreateFolder targetFolder
+    End If
+    
+    Set zipFile = shApp.Namespace(zipPath)
+    Set outFolder = shApp.Namespace(targetFolder)
+    
     If Not zipFile Is Nothing And Not outFolder Is Nothing Then
-        outFolder.CopyHere zipFile.Items, 4
+        outFolder.CopyHere zipFile.Items, 4 + 16
+    Else
     End If
 End Sub
 
